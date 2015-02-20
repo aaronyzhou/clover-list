@@ -15,6 +15,9 @@
 		937C71991A96B7E300FBEE02 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 937C71981A96B7E300FBEE02 /* Images.xcassets */; };
 		937C719C1A96B7E300FBEE02 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 937C719A1A96B7E300FBEE02 /* LaunchScreen.xib */; };
 		937C71A81A96B7E300FBEE02 /* clover_listTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 937C71A71A96B7E300FBEE02 /* clover_listTests.m */; };
+		937C71B21A96B84600FBEE02 /* NetworkUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 937C71B11A96B84600FBEE02 /* NetworkUtil.m */; };
+		937C71B61A96C4F900FBEE02 /* Guide.m in Sources */ = {isa = PBXBuildFile; fileRef = 937C71B51A96C4F900FBEE02 /* Guide.m */; };
+		937C71B91A96F51F00FBEE02 /* GuideCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 937C71B81A96F51F00FBEE02 /* GuideCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -43,6 +46,12 @@
 		937C71A11A96B7E300FBEE02 /* clover listTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "clover listTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		937C71A61A96B7E300FBEE02 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		937C71A71A96B7E300FBEE02 /* clover_listTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = clover_listTests.m; sourceTree = "<group>"; };
+		937C71B11A96B84600FBEE02 /* NetworkUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetworkUtil.m; sourceTree = "<group>"; };
+		937C71B31A96B85A00FBEE02 /* NetworkUtil.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NetworkUtil.h; sourceTree = "<group>"; };
+		937C71B41A96C4F900FBEE02 /* Guide.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Guide.h; sourceTree = "<group>"; };
+		937C71B51A96C4F900FBEE02 /* Guide.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Guide.m; sourceTree = "<group>"; };
+		937C71B71A96F51F00FBEE02 /* GuideCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GuideCell.h; sourceTree = "<group>"; };
+		937C71B81A96F51F00FBEE02 /* GuideCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GuideCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -88,12 +97,18 @@
 				937C718D1A96B7E300FBEE02 /* AppDelegate.m */,
 				937C718F1A96B7E300FBEE02 /* MasterViewController.h */,
 				937C71901A96B7E300FBEE02 /* MasterViewController.m */,
+				937C71B11A96B84600FBEE02 /* NetworkUtil.m */,
+				937C71B31A96B85A00FBEE02 /* NetworkUtil.h */,
 				937C71921A96B7E300FBEE02 /* DetailViewController.h */,
 				937C71931A96B7E300FBEE02 /* DetailViewController.m */,
 				937C71951A96B7E300FBEE02 /* Main.storyboard */,
 				937C71981A96B7E300FBEE02 /* Images.xcassets */,
 				937C719A1A96B7E300FBEE02 /* LaunchScreen.xib */,
 				937C71881A96B7E300FBEE02 /* Supporting Files */,
+				937C71B41A96C4F900FBEE02 /* Guide.h */,
+				937C71B51A96C4F900FBEE02 /* Guide.m */,
+				937C71B71A96F51F00FBEE02 /* GuideCell.h */,
+				937C71B81A96F51F00FBEE02 /* GuideCell.m */,
 			);
 			path = "clover list";
 			sourceTree = "<group>";
@@ -224,7 +239,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				937C71B91A96F51F00FBEE02 /* GuideCell.m in Sources */,
+				937C71B61A96C4F900FBEE02 /* Guide.m in Sources */,
 				937C718E1A96B7E300FBEE02 /* AppDelegate.m in Sources */,
+				937C71B21A96B84600FBEE02 /* NetworkUtil.m in Sources */,
 				937C71911A96B7E300FBEE02 /* MasterViewController.m in Sources */,
 				937C718B1A96B7E300FBEE02 /* main.m in Sources */,
 				937C71941A96B7E300FBEE02 /* DetailViewController.m in Sources */,
@@ -420,6 +438,7 @@
 				937C71AD1A96B7E300FBEE02 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		937C71AE1A96B7E300FBEE02 /* Build configuration list for PBXNativeTarget "clover listTests" */ = {
 			isa = XCConfigurationList;
@@ -428,6 +447,7 @@
 				937C71B01A96B7E300FBEE02 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

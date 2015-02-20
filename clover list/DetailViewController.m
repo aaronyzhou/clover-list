@@ -14,6 +14,9 @@
 
 @implementation DetailViewController
 
+static NSString* baseUrl1 = @"https://www.guide";
+static NSString* baseUrl2 = @"book.com";
+
 #pragma mark - Managing the detail item
 
 - (void)setDetailItem:(id)newDetailItem {
@@ -28,13 +31,17 @@
 - (void)configureView {
     // Update the user interface for the detail item.
     if (self.detailItem) {
-        self.detailDescriptionLabel.text = [self.detailItem description];
+        NSURL* url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", baseUrl1, baseUrl2, self.detailItem.url]];
+        NSURLRequest *request = [[NSURLRequest alloc] initWithURL: url];
+        NSLog(@"%@", url);
+        [self.eventWebView loadRequest:request];
     }
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
+    self.eventWebView = (UIWebView*) [self.view viewWithTag:105];
     [self configureView];
 }
 

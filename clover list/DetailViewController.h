@@ -7,11 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Guide.h"
 
 @interface DetailViewController : UIViewController
 
-@property (strong, nonatomic) id detailItem;
-@property (weak, nonatomic) IBOutlet UILabel *detailDescriptionLabel;
+@property (strong, nonatomic) Guide* detailItem;
+@property (weak, nonatomic) UIWebView *eventWebView;
 
 @end
 

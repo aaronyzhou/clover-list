@@ -8,6 +8,9 @@
 
 #import "MasterViewController.h"
 #import "DetailViewController.h"
+#import "NetworkUtil.h"
+#import "Guide.h"
+#import "GuideCell.h"
 
 @interface MasterViewController ()
 
@@ -27,11 +30,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
-    self.navigationItem.leftBarButtonItem = self.editButtonItem;
+    //self.navigationItem.leftBarButtonItem = self.editButtonItem;
 
-    UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(insertNewObject:)];
-    self.navigationItem.rightBarButtonItem = addButton;
+    UIBarButtonItem *reloadButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(reloadUpcomingGuides:)];
+    self.navigationItem.rightBarButtonItem = reloadButton;
     self.detailViewController = (DetailViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
+    [self reloadUpcomingGuides:nil];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -39,13 +43,19 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)insertNewObject:(id)sender {
+- (void)reloadUpcomingGuides:(id)sender {
     if (!self.objects) {
         self.objects = [[NSMutableArray alloc] init];
     }
-    [self.objects insertObject:[NSDate date] atIndex:0];
-    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
-    [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+    [NetworkUtil getUpcomingGuidesWithHandler:^(int responseCode, NSDictionary *dict) {
+        NSArray *guides = [dict objectForKey:@"data"];
+        for (NSDictionary* dict in guides) {
+            [self.objects addObject:[[Guide alloc] initWithDictionary:dict]];
+        }
+        [self.objects sortedArrayUsingSelector:@selector(compare:)];
+        [self.tableView reloadData];
+    }];
+    
 }
 
 #pragma mark - Segues
@@ -53,7 +63,7 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([[segue identifier] isEqualToString:@"showDetail"]) {
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-        NSDate *object = self.objects[indexPath.row];
+        Guide *object = self.objects[indexPath.row];
         DetailViewController *controller = (DetailViewController *)[[segue destinationViewController] topViewController];
         [controller setDetailItem:object];
         controller.navigationItem.leftBarButtonItem = self.splitViewController.displayModeButtonItem;
@@ -73,24 +83,27 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
+    
+    Guide *guide = self.objects[indexPath.row];
+    
+    UITextView* titleTextView = (UITextView*)[cell viewWithTag:101];
+    UITextView* venueTextView = (UITextView*)[cell viewWithTag:102];
+    UITextView* dateTextView = (UITextView*)[cell viewWithTag:103];
+    UIImageView* iconImageView = (UIImageView*) [cell viewWithTag:104];
 
-    NSDate *object = self.objects[indexPath.row];
-    cell.textLabel.text = [object description];
+    [NSURLConnection sendAsynchronousRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:guide.iconUrl]] queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
+        iconImageView.image = [UIImage imageWithData:data];
+    }];
+    
+    [titleTextView setText:guide.name];
+    [venueTextView setText:[NSString stringWithFormat:@"%@, %@", guide.venueCity, guide.venueState]];
+    [dateTextView setText:[NSString stringWithFormat:@"%@ - %@", guide.startDateString, guide.endDateString]];
+    
     return cell;
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        [self.objects removeObjectAtIndex:indexPath.row];
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
-    }
+    return NO;
 }
 
 @end
